@@ -18,11 +18,11 @@ app.get("/repositories", (request, response) => {
 
 app.post("/repositories", (request, response) => {
   //obtem os dados enviados no body da requisicao
-  const { title, url, tech } = request.body
-  let like = 0
+  const { title, url, techs } = request.body
+  let likes = 0
 
   //cria array transitorio com id para gravar
-  const repositorie = { id: uuid(), title, url, tech, like }
+  const repositorie = { id: uuid(), title, url, techs, likes }
 
   //adiciona os dados recebidos do array com id ao array geral
   repositories.push(repositorie)
@@ -33,7 +33,7 @@ app.post("/repositories", (request, response) => {
 
 app.put("/repositories/:id", (request, response) => {
   const { id } = request.params
-  const { title, url, tech} = request.body
+  const { title, url, techs} = request.body
 
   //obtem os dados e separa o like para nao apagar na atualizacao
   const repositorieData = repositories.find(repositorie => repositorie.id == id)
@@ -46,8 +46,8 @@ app.put("/repositories/:id", (request, response) => {
     return response.status('400').json({error : 'Repositorie not found.'})
   }
 
-  const like = repositorieData.like 
-  const repositorie = {id, title, url, tech, like}
+  const likes = repositorieData.likes 
+  const repositorie = {id, title, url, techs, likes}
 
   repositories[repositorieIndex] = repositorie
 
@@ -82,10 +82,10 @@ app.post("/repositories/:id/like", (request, response) => {
     return response.status('400').json({error : 'Repositorie not found.'})
   }
 
-  let count = repositorieData.like  
+  let count = repositorieData.likes  
   count++
 
-  repositorieData.like = count
+  repositorieData.likes = count
 
   repositories[repositorieIndex] = repositorieData
 
