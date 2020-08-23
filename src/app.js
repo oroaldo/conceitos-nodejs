@@ -13,7 +13,7 @@ const repositories = [];
 
 app.get("/repositories", (request, response) => {
   //Retorna o proprio array geral
-  return response.json([repositories])
+  return response.json(repositories)
 });
 
 app.post("/repositories", (request, response) => {
